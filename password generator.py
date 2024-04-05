@@ -1,48 +1,32 @@
-import string
+import tkinter as tk
 import random
+import string
 
-# Getting password length
-length = int(input("Enter password length: "))
+def generate_password():
+    password_length = int(length_entry.get())
+    password_characters = string.ascii_letters + string.digits + string.punctuation
+    generated_password = ''.join(random.choice(password_characters) for _ in range(password_length))
+    password_var.set(generated_password)
 
-print('''Choose character set for password from these : 
-		1. Digits
-		2. Letters
-		3. Special characters
-		4. Exit''')
 
-characterList = ""
+root = tk.Tk()
+root.title("Password Generator")
 
-# Getting character set for password
-while(True):
-	choice = int(input("Pick a number "))
-	if(choice == 1):
-		
-		# Adding letters to possible characters
-		characterList += string.digits
-	elif(choice == 2):
-		
-		# Adding digits to possible characters
-		characterList += string.ascii_letters
-	elif(choice == 3):
-		
-		# Adding special characters to possible
-		# characters
-		characterList += string.punctuation
-	elif(choice == 4):
-		break
-	else:
-		print("Please pick a valid option!")
 
-password = []
+length_label = tk.Label(root, text="Password Length:")
+length_label.pack(pady=10)
 
-for i in range(length):
+length_entry = tk.Entry(root)
+length_entry.pack()
 
-	# Picking a random character from our 
-	# character list
-	randomchar = random.choice(characterList)
-	
-	# appending a random character to password
-	password.append(randomchar)
 
-# printing password as a string
-print("The random password is " + "".join(password))
+generate_button = tk.Button(root, text="Generate Password", command=generate_password)
+generate_button.pack(pady=10)
+
+
+password_var = tk.StringVar()
+password_label = tk.Label(root, textvariable=password_var)
+password_label.pack()
+
+
+root.mainloop()
